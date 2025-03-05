@@ -26,14 +26,14 @@ const addPlayer = () => {
         errorContent.textContent = "Maximo 8 letras porfavor";
         setTimeout(() => {
           inputNamePlayer.value = "";
-          errorContent.textContent ="";
+          errorContent.textContent = "";
         }, 1500);
       }
     } else {
       errorContent.textContent = "ingrese solo letras";
       setTimeout(() => {
         inputNamePlayer.value = "";
-        errorContent.textContent ="";
+        errorContent.textContent = "";
       }, 1500);
     }
   });
@@ -41,7 +41,7 @@ const addPlayer = () => {
 
 const showPlayers = () => {
   playersList.innerHTML = "";
-  
+
   localStoragePlayers.forEach((jugador) => {
     const elemento = document.createElement("div");
     elemento.classList.add("player-div");
@@ -71,13 +71,14 @@ const showPlayers = () => {
 
 const builderTeam = () => {
   btnBuildTeams.addEventListener("click", () => {
-    const modalTeam = document.createElement("div");
-    modalTeam.classList.add("modal-team");
-    modalTeam.classList.add("animate__animated");
-    modalTeam.classList.add("animate__rotateIn");
-    document.body.appendChild(modalTeam);
+    if (localStoragePlayers.length >= 4) {
+      const modalTeam = document.createElement("div");
+      modalTeam.classList.add("modal-team");
+      modalTeam.classList.add("animate__animated");
+      modalTeam.classList.add("animate__rotateIn");
+      document.body.appendChild(modalTeam);
 
-    modalTeam.innerHTML = `
+      modalTeam.innerHTML = `
       <span id="btn-close-modal" class="btn-close-modal">
         <div class="loader-content">
           <span class="loader"></span>
@@ -85,13 +86,15 @@ const builderTeam = () => {
       </span>
     `;
 
-    setTimeout(() => {
-      const teamMezclado = localStoragePlayers.sort(() => Math.random() - 0.5);
-      const mitad = Math.floor(localStoragePlayers.length / 2);
-      const team1 = teamMezclado.slice(0, mitad);
-      const team2 = teamMezclado.slice(mitad);
+      setTimeout(() => {
+        const teamMezclado = localStoragePlayers.sort(
+          () => Math.random() - 0.5
+        );
+        const mitad = Math.floor(localStoragePlayers.length / 2);
+        const team1 = teamMezclado.slice(0, mitad);
+        const team2 = teamMezclado.slice(mitad);
 
-      modalTeam.innerHTML = `       
+        modalTeam.innerHTML = `       
         <i id="btn-close-modal" class="fa-solid fa-circle-xmark btn-close-modal"></i>
 
         <div id="content-team-builder1" class="content-team-builder">
@@ -104,34 +107,41 @@ const builderTeam = () => {
 
       `;
 
-      const team1Content = document.getElementById("content-team-builder1");
-      team1.forEach((player) => {
-        const playerP = document.createElement("p");
-        playerP.classList.add("animate__animated");
-        playerP.classList.add("animate__lightSpeedInRight");
-        playerP.innerHTML = `${
-          Number(team1.indexOf(player)) + 1
-        } ${player} <i class="fa-solid fa-user"></i>`;
-        team1Content.appendChild(playerP);
-      });
-
-      const team2Content = document.getElementById("content-team-builder2");
-      team2.forEach((player) => {
-        const playerP = document.createElement("p");
-        playerP.classList.add("animate__animated");
-        playerP.classList.add("animate__lightSpeedInRight");
-        playerP.innerHTML = `${
-          Number(team2.indexOf(player)) + 1
-        } ${player} <i class="fa-solid fa-user"></i>`;
-        team2Content.appendChild(playerP);
-      });
-
-      document
-        .getElementById("btn-close-modal")
-        .addEventListener("click", () => {
-          modalTeam.remove();
+        const team1Content = document.getElementById("content-team-builder1");
+        team1.forEach((player) => {
+          const playerP = document.createElement("p");
+          playerP.classList.add("animate__animated");
+          playerP.classList.add("animate__lightSpeedInRight");
+          playerP.innerHTML = `${
+            Number(team1.indexOf(player)) + 1
+          } ${player} <i class="fa-solid fa-user"></i>`;
+          team1Content.appendChild(playerP);
         });
-    }, 1500);
+
+        const team2Content = document.getElementById("content-team-builder2");
+        team2.forEach((player) => {
+          const playerP = document.createElement("p");
+          playerP.classList.add("animate__animated");
+          playerP.classList.add("animate__lightSpeedInRight");
+          playerP.innerHTML = `${
+            Number(team2.indexOf(player)) + 1
+          } ${player} <i class="fa-solid fa-user"></i>`;
+          team2Content.appendChild(playerP);
+        });
+
+        document
+          .getElementById("btn-close-modal")
+          .addEventListener("click", () => {
+            modalTeam.remove();
+          });
+      }, 1500);
+    } else {
+      errorContent.textContent =
+        "El numero de participantes debe ser mayor o igual a 4";
+      setTimeout(() => {
+        errorContent.textContent = "";
+      }, 2000);
+    }
   });
 };
 
