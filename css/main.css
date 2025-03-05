@@ -1,18 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 body {
-  background: black;
+  background: rgb(12, 12, 12);
   color: white;
-
-  font-family: "Inter", sans-serif;
-}
-
-body h1 {
-  font-size: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: "Inter", sans-serif;
+}
+
+/* * {
+  border: 1px solid gold;
+} */
+body h1 {
+  font-size: 3rem;
+  text-align: center;
 }
 
 #selector-section {
@@ -25,35 +28,58 @@ body h1 {
 
 #selector-section > #label-name-player {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid grey;
-  gap: .5rem;
-}
-#selector-section > #label-name-player > #input-name-player {
-  padding: 0.6rem;
-  border: 1px solid transparent;
-  background-color: transparent;
-  color: white;
-  font-weight: bolder;
 }
 
-#selector-section > #label-name-player > #input-name-player:focus {
-  outline: none;
-}
-
-#players-list {
+.input-button-div {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  margin-top: 1rem;
+}
+
+#error-input {
+  color: red;
+  font-weight: 100;
+}
+
+#input-name-player {
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: white;
+  font-weight: bolder;
+  padding: 9px;
+  font-size: 1.2rem;
+  border-radius: 3px;
+  border-bottom: 1px solid greenyellow;
+}
+
+#input-name-player:focus {
+  outline: none;
+  border: 1px solid grey;
+}
+
+#btn-add-player {
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: grey;
+  font-size: 1.5rem;
+}
+
+#btn-add-player:hover {
+  filter: drop-shadow(1px 1px 5px grey);
+  color: white;
 }
 
 .btn-model-1 {
   border: 1px solid transparent;
-  background-color: rgb(0, 0, 255);
   padding: 0.5rem 1rem;
   margin-top: 1rem;
   font-weight: bold;
@@ -81,9 +107,24 @@ body h1 {
 }
 
 .btn-model-2:hover {
-  transform: scale(1.055);
+  transform: scale(1.2);
   transform: translateY(-1px);
-  background-color: rgb(163, 0, 0);
+  color: rgb(163, 0, 0);
+}
+
+#players-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 1rem;
+  padding: 15px;
+  position: relative;
+}
+
+#selector-section h3 {
+  margin-top: 1rem;
 }
 
 .player-div {
@@ -91,10 +132,9 @@ body h1 {
   align-items: start;
   justify-content: space-between;
   gap: 2rem;
-  padding: 15px 15px;
   position: relative;
-  border-bottom: 1px solid grey;
-  width: 250px;
+  width: 200px;
+  border-bottom: 1px solid greenyellow;
 }
 
 .player-div p {
@@ -109,11 +149,13 @@ body h1 {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
   backdrop-filter: blur(25px) saturate(200%);
   -webkit-backdrop-filter: blur(25px) saturate(200%);
   background-color: rgba(0, 0, 0, 0.54);
+  overflow-y: auto;
 }
 
 .team {
@@ -129,23 +171,12 @@ body h1 {
   text-align: left;
   border-bottom: 1px solid grey;
   width: 80%;
-}
-
-.btn-close-modal {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  cursor: pointer;
-  font-size: 2rem;
-}
-
-.btn-close-modal:hover {
-  color: green;
+  text-transform: uppercase;
 }
 
 .loader-content {
   position: fixed;
-  top: 40%;
+  top: 45%;
   right: 50%;
 }
 
@@ -159,6 +190,7 @@ body h1 {
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
+
 .loader::after,
 .loader::before {
   content: "";
@@ -172,6 +204,7 @@ body h1 {
   transform: translate(150%, 150%);
   border-radius: 50%;
 }
+
 .loader::before {
   left: auto;
   top: auto;
@@ -186,5 +219,56 @@ body h1 {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* .content-team-builder {
+  padding: 1rem;
+} */
+
+.content-team-builder p {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  border-bottom: 1px solid grey;
+  width: 250px;
+  padding-bottom: 1rem;
+}
+
+.content-team-builder > h3 {
+  font-size: 1.5rem;
+}
+
+.player-team-builder {
+  font-size: 1.2rem;
+}
+
+#btn-rebuilder {
+  margin-left: 1rem;
+  border: none;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 2px;
+  font-weight: bolder;
+}
+
+.btn-close-modal {
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 1rem;
+  position: fixed;
+  top: 10px;
+  right: 2px;
+}
+
+.btn-close-modal:hover {
+  color: green;
+}
+
+@media (max-width: 768px) {
+  body h1 {
+    font-size: 1.5rem;
+    text-align: center;
   }
 }

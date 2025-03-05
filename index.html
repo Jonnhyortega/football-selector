@@ -3,57 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Armador de equipos">
     <link rel="stylesheet" href="/css/main.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="icon"
+      width="64" height="64"
+      href="https://img.icons8.com/external-parzival-1997-flat-parzival-1997/64/external-selection-human-resource-management-parzival-1997-flat-parzival-1997.png"
+      alt="external-selection-human-resource-management-parzival-1997-flat-parzival-1997"
+    />
 
-    <title>Selector</title>
+    <title>Team Builder</title>
   </head>
   <body>
-    <h1>Football selector</h1>
-
+    <h1 class="animate__animated animate__heartBeat">Armador de equipos</h1>
     <section id="selector-section">
       <label id="label-name-player" for="input-name-player">
         Agregar jugador
-        <input
-          id="input-name-player"
-          type="text"
-          placeholder="Ingrese nombre de jugador"
-        />
+        <div class="input-button-div">
+          <input
+            id="input-name-player"
+            type="text"
+            placeholder="Ingrese nombre de jugador"
+          />
+          <button id="btn-add-player">
+            <i class="fa-solid fa-user-plus"></i>
+          </button>
+        </div>
       </label>
-      <button id="btn-add-player" class="btn-model-1">
-        <i class="fa-solid fa-user-plus"></i>
-      </button>
+      <small id="error-input"></small>
+
+      <h3>Lista de participantes</h3>
       <div id="players-list"></div>
       <button id="btn-build-teams" class="btn-model-1">Armar equipos</button>
     </section>
-
-    <!-- <div class="modal-team">
-      <div class="team">
-        <h3>Equipo 1</h3>
-        <p>jonson</p>
-        <p>bruce</p>
-        <p>wwashington</p>
-        <p>jonson</p>
-        <p>bruce</p>
-        <p>wwashington</p>
-        <p>bruce</p>
-        <p>wwashington</p>
-      </div>
-      <div class="team">
-        <h3>Equipo 1</h3>
-        <p>jonson</p>
-        <p>bruce</p>
-        <p>wwashington</p>
-        <p>jonson</p>
-        <p>bruce</p>
-        <p>wwashington</p>
-        <p>bruce</p>
-        <p>wwashington</p>
-      </div>
-    </div> -->
 
     <script src="/Js/main.js" type="module"></script>
   </body>

@@ -5,21 +5,43 @@ const localStoragePlayers =
   JSON.parse(localStorage.getItem("ListPlayers")) || [];
 const labelNamePlayer = document.getElementById("label-name-player");
 const btnBuildTeams = document.getElementById("btn-build-teams");
-
+const errorContent = document.getElementById("error-input");
 const addPlayer = () => {
   btnAddPlayer.addEventListener("click", () => {
-    console.log("click en agregar jugador");
-    if (inputNamePlayer.value.length > 0) {
-      localStoragePlayers.push(inputNamePlayer.value);
-      localStorage.setItem("ListPlayers", JSON.stringify(localStoragePlayers));
-      inputNamePlayer.value = "";
-      showPlayers();
+    const regex = /\d/;
+
+    if (!regex.test(inputNamePlayer.value)) {
+      if (
+        inputNamePlayer.value.length > 0 &&
+        inputNamePlayer.value.length <= 8
+      ) {
+        localStoragePlayers.push(inputNamePlayer.value);
+        localStorage.setItem(
+          "ListPlayers",
+          JSON.stringify(localStoragePlayers)
+        );
+        inputNamePlayer.value = "";
+        showPlayers();
+      } else {
+        errorContent.textContent = "Maximo 8 letras porfavor";
+        setTimeout(() => {
+          inputNamePlayer.value = "";
+          errorContent.textContent ="";
+        }, 1500);
+      }
+    } else {
+      errorContent.textContent = "ingrese solo letras";
+      setTimeout(() => {
+        inputNamePlayer.value = "";
+        errorContent.textContent ="";
+      }, 1500);
     }
   });
 };
 
 const showPlayers = () => {
   playersList.innerHTML = "";
+  
   localStoragePlayers.forEach((jugador) => {
     const elemento = document.createElement("div");
     elemento.classList.add("player-div");
@@ -51,13 +73,16 @@ const builderTeam = () => {
   btnBuildTeams.addEventListener("click", () => {
     const modalTeam = document.createElement("div");
     modalTeam.classList.add("modal-team");
+    modalTeam.classList.add("animate__animated");
+    modalTeam.classList.add("animate__rotateIn");
     document.body.appendChild(modalTeam);
 
     modalTeam.innerHTML = `
-            <span id="btn-close-modal" class="btn-close-modal">
-          <div class="loader-content">
+      <span id="btn-close-modal" class="btn-close-modal">
+        <div class="loader-content">
           <span class="loader"></span>
-          </div>
+        </div>
+      </span>
     `;
 
     setTimeout(() => {
@@ -66,48 +91,52 @@ const builderTeam = () => {
       const team1 = teamMezclado.slice(0, mitad);
       const team2 = teamMezclado.slice(mitad);
 
-      modalTeam.innerHTML = `
-        <div>
-        <span id="btn-close-modal" class="btn-close-modal">
-        <i class="fa-solid fa-circle-xmark"></i>
-        </span>
-        <h3>Equipo 1</h3>
-            <p>${team1[0]}</p>
-            <p>${team1[1]}</p>
-            <p>${team1[2]}</p>
-            <p>${team1[3]}</p>
-            <p>${team1[4]}</p>
-            <p>${team1[5]}</p>
-            <p>${team1[6]}</p>
-            <p>${team1[7]}</p>           
-        </div>
-        <div>
-        <h3>Equipo 2</h3>
-            <p>${team2[0]}</p>
-            <p>${team2[1]}</p>
-            <p>${team2[2]}</p>
-            <p>${team2[3]}</p>
-            <p>${team2[4]}</p>
-            <p>${team2[5]}</p>
-            <p>${team2[6]}</p>
-            <p>${team2[7]}</p>
+      modalTeam.innerHTML = `       
+        <i id="btn-close-modal" class="fa-solid fa-circle-xmark btn-close-modal"></i>
+
+        <div id="content-team-builder1" class="content-team-builder">
+          <h3>Equipo 1</h3>
         </div>
 
-        <button onclick="builderTeam">Rearmar</button>
-    `;
+        <div id="content-team-builder2" class="content-team-builder">
+          <h3>Equipo 2</h3>
+        </div>
+
+      `;
+
+      const team1Content = document.getElementById("content-team-builder1");
+      team1.forEach((player) => {
+        const playerP = document.createElement("p");
+        playerP.classList.add("animate__animated");
+        playerP.classList.add("animate__lightSpeedInRight");
+        playerP.innerHTML = `${
+          Number(team1.indexOf(player)) + 1
+        } ${player} <i class="fa-solid fa-user"></i>`;
+        team1Content.appendChild(playerP);
+      });
+
+      const team2Content = document.getElementById("content-team-builder2");
+      team2.forEach((player) => {
+        const playerP = document.createElement("p");
+        playerP.classList.add("animate__animated");
+        playerP.classList.add("animate__lightSpeedInRight");
+        playerP.innerHTML = `${
+          Number(team2.indexOf(player)) + 1
+        } ${player} <i class="fa-solid fa-user"></i>`;
+        team2Content.appendChild(playerP);
+      });
 
       document
         .getElementById("btn-close-modal")
         .addEventListener("click", () => {
           modalTeam.remove();
         });
-    }, 2000);
+    }, 1500);
   });
 };
 
 const init = () => {
   document.addEventListener("DOMContentLoaded", () => {
-    console.log("Aplicación inicializada");
     showPlayers();
     addPlayer();
     builderTeam();
